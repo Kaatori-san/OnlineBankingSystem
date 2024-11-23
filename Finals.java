@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Finals {
-    private static HashMap<String, Account> accounts = new HashMap<>();
-    private static Scanner scanner = new Scanner(System.in);
+    final private static HashMap<String, Account> accounts = new HashMap<>();
+    final private static Scanner scanner = new Scanner(System.in);
     private static Account currentAccount;
 
     public static void initializeAccounts() {
@@ -78,6 +78,7 @@ public class Finals {
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    wait(2000);
             }
         }
 
@@ -94,9 +95,11 @@ public class Finals {
         if (account != null && account.checkPassword(password)) {
             System.out.println("Login successful!");
             currentAccount = account;
+            wait(2000);
             return true;
         } else {
             System.out.println("Invalid username or password.");
+            wait(2000);
             return false;
         }
     }
@@ -107,6 +110,7 @@ public class Finals {
 
         if (accounts.containsKey(username)) {
             System.out.println("Username already exists. Please try a different one.");
+            wait(2000);
             return;
         }
 
@@ -144,6 +148,7 @@ public class Finals {
 
         if (balance < 0) {
             System.out.println("Initial deposit cannot be negative. Registration failed.");
+            wait(2000);
             return;
         }
 
@@ -154,6 +159,15 @@ public class Finals {
         System.out.println("Username: " + username);
         System.out.println("Account Number: " + newAccount.getAccountNumber());
         System.out.println("Account Type: " + newAccount.getAccountType());
+
+        System.out.print("Going back to account menu in: ");
+        wait(1000);
+        System.out.print("3 ");
+        wait(1000);
+        System.out.print("2 ");
+        wait(1000);
+        System.out.print("1");
+        wait(1000);
     }
 
     // Method to prompt for password with asterisks (masked input)
@@ -184,6 +198,7 @@ public class Finals {
 
         if (account == null) {
             System.out.println("Username not found.");
+            wait(2000);
             return;
         }
 
@@ -197,8 +212,10 @@ public class Finals {
             String newPassword = scanner.nextLine();
             account.setPassword(newPassword);
             System.out.println("Password has been successfully reset.");
+            wait(2000);
         } else {
             System.out.println("Incorrect answers to security questions.");
+            wait(2000);
         }
     }
 
@@ -269,6 +286,7 @@ public class Finals {
             transferFee = 20; // Fee for transferring to another bank
         } else if (transferType != 1) {
             System.out.println("Invalid choice. Transfer canceled.");
+            wait(2000);
             return;
         }
 
@@ -287,12 +305,14 @@ public class Finals {
 
         if (recipient == null) {
             System.out.println("Recipient account not found.");
+            wait(2000);
             return;
         }
 
         // Prevent transferring to the current account
         if (recipient.equals(currentAccount)) {
             System.out.println("Error: Cannot transfer to your own account.");
+            wait(2000);
             return;
         }
 
@@ -304,6 +324,7 @@ public class Finals {
 
         if (transferAmount <= 0 || totalAmount > currentAccount.getBalance()) {
             System.out.println("Invalid amount or insufficient balance.");
+            wait(2000);
             return;
         }
 
@@ -318,8 +339,10 @@ public class Finals {
             currentAccount.withdraw(totalAmount);
             recipient.deposit(transferAmount, false);  // Deposit without showing balance
             System.out.println("Transfer successful!");
+            wait(2000);
         } else {
             System.out.println("Transfer canceled.");
+            wait(2000);
         }
     }
 
@@ -344,11 +367,13 @@ public class Finals {
 
     if (billAmount <= 0) {
         System.out.println("Invalid bill amount.");
+        wait(2000);
         return;
     }
 
     if (billAmount > currentAccount.getBalance()) {
         System.out.println("Insufficient funds to pay this bill.");
+        wait(2000);
         return;
     }
 
@@ -363,19 +388,21 @@ public class Finals {
     if (confirmation.equalsIgnoreCase("yes")) {
         currentAccount.withdraw(billAmount);
         System.out.println("Bill payment successful!");
+        wait(2000);
     } else {
         System.out.println("Bill payment canceled.");
+        wait(2000);
     }
 }
 
 // Helper method to get the bill category name
 private static String getBillCategoryName(int category) {
-    switch (category) {
-        case 1: return "Electricity";
-        case 2: return "Water";
-        case 3: return "Internet";
-        default: return "Unknown";
-    }
+    return switch (category) {
+        case 1 -> "Electricity";
+        case 2 -> "Water";
+        case 3 -> "Internet";
+        default -> "Unknown";
+    };
 }
 
     private static void showBalance() {
