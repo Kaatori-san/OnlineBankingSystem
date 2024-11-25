@@ -39,7 +39,10 @@ public class Finals {
             Thread.currentThread().interrupt();
         }
     }
-
+    public static void waitForUserInput(){
+        System.out.print("Press enter to continue...");
+        String waitInput = scanner.nextLine();
+    }
     public static void start() {
         boolean loggedIn = false;
 
@@ -154,7 +157,7 @@ public class Finals {
 
         Account newAccount = new Account(username, fullName, birthday, birthplace, address, mobileNumber, accountType, password, balance, favoriteColor, securityAnswer);
         accounts.put(username, newAccount);
-
+        clearScreen();
         System.out.println("Registration successful! Here are your account details:");
         System.out.println("Username: " + username);
         System.out.println("Account Number: " + newAccount.getAccountNumber());
@@ -238,7 +241,6 @@ public class Finals {
 
             switch (choice) {
                 case 1:
-                    clearScreen();
                     showBalance();
                     break;
                 case 2:
@@ -252,6 +254,7 @@ public class Finals {
                     System.out.print("Enter withdrawal amount: ");
                     double withdrawalAmount = scanner.nextDouble();
                     currentAccount.withdraw(withdrawalAmount);
+                    waitForUserInput();
                     break;
                 case 4:
                     clearScreen();
@@ -406,6 +409,9 @@ private static String getBillCategoryName(int category) {
 }
 
     private static void showBalance() {
+        clearScreen();
+        System.out.println("Account Balance");
         System.out.println("Your current balance is: " + currentAccount.getBalance());
+        waitForUserInput();
     }
 }
