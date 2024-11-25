@@ -243,18 +243,20 @@ public class Finals {
                 case 1:
                     showBalance();
                     break;
-                case 2:
+                case 2: // Deposit
                     clearScreen();
                     System.out.print("Enter deposit amount: ");
                     double depositAmount = scanner.nextDouble();
-                    currentAccount.deposit(depositAmount, true);
+                    scanner.nextLine(); 
+                    currentAccount.deposit(depositAmount, true); 
                     break;
-                case 3:
+                case 3: // Withdraw
                     clearScreen();
                     System.out.print("Enter withdrawal amount: ");
                     double withdrawalAmount = scanner.nextDouble();
+                    scanner.nextLine(); 
                     currentAccount.withdraw(withdrawalAmount);
-                    waitForUserInput();
+                    waitForUserInput(); 
                     break;
                 case 4:
                     clearScreen();
@@ -332,8 +334,8 @@ public class Finals {
         }
 
         // Display transfer preview
-        System.out.printf("\nTransfer Preview:\nRecipient Username: %s\nTransfer Amount: %.2f\nTransfer Fee: %.2f\nTotal Amount Deducted: %.2f\n",
-                recipient.getUsername(), transferAmount, transferFee, totalAmount);
+        System.out.printf("\nTransfer Preview:\nRecipient Username: %s\nTransfer Amount: %.2f\nTransfer Fee: %.2f\nTotal Amount: %.2f\n\nCurrent Balance: %.2f\n",
+                recipient.getUsername(), transferAmount, transferFee, totalAmount, currentAccount.getBalance());
 
         System.out.print("Confirm transfer? (yes/no): ");
         String confirmation = scanner.nextLine();
@@ -366,7 +368,7 @@ public class Finals {
     // Ask for the bill amount
     System.out.print("Enter bill amount: ");
     double billAmount = scanner.nextDouble();
-    scanner.nextLine(); // Consume leftover newline
+    scanner.nextLine(); 
 
     if (billAmount <= 0) {
         System.out.println("Invalid bill amount.");
@@ -381,7 +383,7 @@ public class Finals {
     }
 
     // Display bill payment preview
-    System.out.printf("\nBill Payment Preview:\nBiller Name: %s\nBill Category: %s\nBill Amount: %.2f\nCurrent Balance: %.2f\n",
+    System.out.printf("\nBill Payment Preview:\nBiller Name: %s\nBill Category: %s\nBill Amount: %.2f\n\nCurrent Balance: %.2f\n",
             billerName, getBillCategoryName(billCategory), billAmount, currentAccount.getBalance());
 
     // Ask for confirmation before paying the bill
@@ -409,9 +411,17 @@ private static String getBillCategoryName(int category) {
 }
 
     private static void showBalance() {
-        clearScreen();
-        System.out.println("Account Balance");
-        System.out.println("Your current balance is: " + currentAccount.getBalance());
-        waitForUserInput();
-    }
+    clearScreen();
+    System.out.println("Account Balance");
+    System.out.println("Your current balance is: " + currentAccount.getBalance());
+
+    // Calculate balance after 1 month with 0.1250% interest
+    double interestRate = 0.00125;
+    double balanceAfterInterest = currentAccount.getBalance() * (1 + interestRate);
+
+    System.out.printf("Your balance after 1 month (with 0.1250%% interest): %.2f%n", balanceAfterInterest);
+
+    waitForUserInput();
+}
+
 }

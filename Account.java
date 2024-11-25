@@ -102,7 +102,6 @@ public class Account {
             balance += amount;
             if (showBalance) {
                 System.out.println("Deposited " + amount + " to your account. New balance: " + balance);
-                Finals.wait(3000);
                 Finals.waitForUserInput();
             }
         } else {
